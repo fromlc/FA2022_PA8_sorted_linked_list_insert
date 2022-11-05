@@ -13,8 +13,8 @@ using std::cout;
 //------------------------------------------------------------------------------
 // constants
 //------------------------------------------------------------------------------
-constexpr bool INS = true;
-constexpr bool ADD = !INS;
+constexpr bool ADD = false;
+constexpr bool INS = !ADD;
 
 //------------------------------------------------------------------------------
 // local function prototypes
@@ -46,7 +46,12 @@ int main() {
 	//--------------------------------------------------------------------------
 	// insert some list items in ascending sort order
 	//--------------------------------------------------------------------------
-	testInsert(myList);
+	//testInsert(myList);
+
+	//--------------------------------------------------------------------------
+	// delete list items
+	//--------------------------------------------------------------------------
+	testDelete(myList);
 
 	// END TEST release all node memory
 	myList.makeEmpty();
@@ -130,9 +135,17 @@ void testDelete(LinkedList& myList) {
 //------------------------------------------------------------------------------
 inline bool _zapNshow(LinkedList& list, int data) {
 
-	cout << "\ndeleting " << data;
+	cout << "\ndeleting " << data << "...";
 
-	bool deleted = list.deleteNode(3);
+	bool deleted = list.deleteNode(data);
+
+	if (!deleted) {
+		cout << "not found";
+	}
+	else {
+		cout << "ok";
+	}
+
 	displayNodeData(list);
 
 	return deleted;
