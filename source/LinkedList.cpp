@@ -40,9 +40,70 @@ void LinkedList::addNode(int data) {
 //------------------------------------------------------------------------------
 // insert list node containing passed data value
 // 
-// #TODO
+// handles 4 cases:
+//		1. new data node is first list node
+//		2. new data node becomes new head of list
+//		3. new data node added after tail, becomes new tail of list
+//		4. new data node inserted between nodes
+// 
+// inserts duplicate data _before existing node with same data value
+// 
+// updates Position pointer to new node
+// 
 //------------------------------------------------------------------------------
-void LinkedList::insertNode(int data) {}
+void LinkedList::insertNode(int data) {
+
+	Node* pNode = new Node(data);
+
+	// case 1: new data node is first list node
+	if (head == nullptr) {
+		head = pNode;
+		gotoHead();
+		return;
+	}
+
+	//-----------------------------------------------------------------------------
+	// working pointers preserve head pointer, traverse the list
+	//		- p starts off pointing to list head, follows each node's next pointer
+	//		- pPrev starts off nullptr, follows one node behind p
+	//-----------------------------------------------------------------------------
+	Node* p = head;
+	Node* pPrev = nullptr;
+
+	//-----------------------------------------------------------------------------
+	// traverse the list with a while loop
+	// 
+	// the values of p and pPrev after this while loop
+	// determine which case passed data presents
+	//-----------------------------------------------------------------------------
+
+	while (p && p->data < data) {
+		pPrev = p;
+		p = p->next;
+	}
+	
+	// case 2: new data node becomes new head of list
+	if (pPrev == nullptr) {
+		pNode->next = head;
+		head = pNode;
+
+		// update Position pointer
+		gotoHead();
+		return;
+	}
+
+	//-----------------------------------------------------------------------------
+	// case 3: new data node added after tail, becomes new tail of list
+	// and
+	// case	4. new data node inserted between nodes
+	//-----------------------------------------------------------------------------
+	pPrev->next = pNode;
+	pNode->next = p;
+
+	// update internal list pointers
+	Position = pNode;
+	_prevPosition = pPrev;
+}
 
 //------------------------------------------------------------------------------
 // delete list node containing passed data value
@@ -111,12 +172,12 @@ bool LinkedList::gotoNext() {
 // return the list item pointed to by Position in reference param
 //------------------------------------------------------------------------------
 bool LinkedList::getCurrentNodeData(int& fillWithData) {
-	
+
 	if (Position != nullptr) {
 		fillWithData = Position->data;
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -172,7 +233,7 @@ void LinkedList::makeEmpty() {
 		// delete previous Position's memory
 		// the memory deleted is every Node instance
 		delete pNode;
-	} 
+	}
 
 	head = nullptr;
 	Position = nullptr;
