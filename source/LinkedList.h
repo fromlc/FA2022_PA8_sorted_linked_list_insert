@@ -26,8 +26,8 @@ public:
 //------------------------------------------------------------------------------
 class LinkedList {
 private:
-	Node* head;
-	Node* Position;
+	Node* _head;						// internal use: first node in list
+	Node* _Position;					// internal use: current node
 	Node* _prevPosition;				// internal use: simplifies node delete
 
 public:
@@ -36,20 +36,20 @@ public:
 
 	// manage nodes
 	void addNode(int data);				// add new node at head of list
-	void insertNode(int data);			// #TODO implement for sorted list
+	void insertNode(int data);			// add new node in sorted order
 	bool deleteNode(int matchData);
 
-	// manage Position pointer to current node
+	// manage _Position pointer to current node
 
-	// reset Position to head of list
+	// reset _Position to _head of list
 	void gotoHead();
-	// advance Position to next node in list
+	// advance _Position to next node in list
 	bool gotoNext();
-	// return data at current Position
+	// return data at current _Position
 	bool getCurrentNodeData(int& fillWithData);
 
 private:
-	// internal use: set Position pointer to found data node
+	// internal use: set _Position pointer to found data node
 	void _setPosition(int matchData);
 
 public:

@@ -11,9 +11,9 @@
 // constructor
 //------------------------------------------------------------------------------
 LinkedList::LinkedList() {
-	head = nullptr;
+	_head = nullptr;
 
-	// set Position pointer to list head
+	// set _Position pointer to list _head
 	gotoHead();
 }
 
@@ -23,17 +23,17 @@ LinkedList::LinkedList() {
 LinkedList::~LinkedList() { makeEmpty(); }
 
 //------------------------------------------------------------------------------
-// new item becomes list head
+// new item becomes list _head
 //------------------------------------------------------------------------------
 void LinkedList::addNode(int data) {
 
 	Node* pNode = new Node(data);
 
-	pNode->next = head;
-	head = pNode;
+	pNode->next = _head;
+	_head = pNode;
 
-	// before first item is added Position is nullptr
-	if (Position == nullptr)
+	// before first item is added _Position is nullptr
+	if (_Position == nullptr)
 		gotoHead();
 }
 
@@ -42,13 +42,13 @@ void LinkedList::addNode(int data) {
 // 
 // handles 4 cases:
 //		1. new data node is first list node
-//		2. new data node becomes new head of list
+//		2. new data node becomes new _head of list
 //		3. new data node added after tail, becomes new tail of list
 //		4. new data node inserted between nodes
 // 
 // inserts duplicate data _before existing node with same data value
 // 
-// updates Position pointer to new node
+// updates _Position pointer to new node
 // 
 //------------------------------------------------------------------------------
 void LinkedList::insertNode(int data) {
@@ -56,18 +56,18 @@ void LinkedList::insertNode(int data) {
 	Node* pNode = new Node(data);
 
 	// case 1: new data node is first list node
-	if (head == nullptr) {
-		head = pNode;
+	if (_head == nullptr) {
+		_head = pNode;
 		gotoHead();
 		return;
 	}
 
 	//-----------------------------------------------------------------------------
-	// working pointers preserve head pointer, traverse the list
-	//		- p starts off pointing to list head, follows each node's next pointer
+	// working pointers preserve _head pointer, traverse the list
+	//		- p starts off pointing to list _head, follows each node's next pointer
 	//		- pPrev starts off nullptr, follows one node behind p
 	//-----------------------------------------------------------------------------
-	Node* p = head;
+	Node* p = _head;
 	Node* pPrev = nullptr;
 
 	//-----------------------------------------------------------------------------
@@ -82,12 +82,12 @@ void LinkedList::insertNode(int data) {
 		p = p->next;
 	}
 	
-	// case 2: new data node becomes new head of list
+	// case 2: new data node becomes new _head of list
 	if (pPrev == nullptr) {
-		pNode->next = head;
-		head = pNode;
+		pNode->next = _head;
+		_head = pNode;
 
-		// update Position pointer
+		// update _Position pointer
 		gotoHead();
 		return;
 	}
@@ -101,7 +101,7 @@ void LinkedList::insertNode(int data) {
 	pNode->next = p;
 
 	// update internal list pointers
-	Position = pNode;
+	_Position = pNode;
 	_prevPosition = pPrev;
 }
 
@@ -113,25 +113,25 @@ bool LinkedList::deleteNode(int matchData) {
 	_setPosition(matchData);
 
 	// data not found
-	if (Position == nullptr)
+	if (_Position == nullptr)
 		return false;
 
-	// data found, Position points to the containing node
-	Node* pNode = Position;
+	// data found, _Position points to the containing node
+	Node* pNode = _Position;
 
 	// data at list end
 	if (pNode->next == nullptr) {
 		_prevPosition->next = nullptr;
-		Position = _prevPosition;
+		_Position = _prevPosition;
 	}
 	// nodes before and after data
 	else if (_prevPosition != nullptr) {
 		_prevPosition->next = pNode->next;
-		Position = _prevPosition->next;
+		_Position = _prevPosition->next;
 	}
-	// data at list head
+	// data at list _head
 	else {
-		head = pNode->next;
+		_head = pNode->next;
 		gotoHead();
 	}
 
@@ -142,39 +142,39 @@ bool LinkedList::deleteNode(int matchData) {
 }
 
 //------------------------------------------------------------------------------
-// reset Position to list head
+// reset _Position to list _head
 //------------------------------------------------------------------------------
 void LinkedList::gotoHead() {
-	Position = head;
+	_Position = _head;
 	_prevPosition = nullptr;
 }
 
 //------------------------------------------------------------------------------
-// advances Position pointer to the next node on the list, if possible
+// advances _Position pointer to the next node on the list, if possible
 // 
 // returns 
-//		- new Position, when Position did in fact advance
-//		- nullptr, when Position is at list end and cannot advance
+//		- new _Position, when _Position did in fact advance
+//		- nullptr, when _Position is at list end and cannot advance
 //------------------------------------------------------------------------------
 bool LinkedList::gotoNext() {
 
-	if (Position != nullptr) {
+	if (_Position != nullptr) {
 		// advance
-		Position = Position->next;
+		_Position = _Position->next;
 		return true;
 	}
 
-	// can't advance when Position is 0
+	// can't advance when _Position is 0
 	return false;
 }
 
 //------------------------------------------------------------------------------
-// return the list item pointed to by Position in reference param
+// return the list item pointed to by _Position in reference param
 //------------------------------------------------------------------------------
 bool LinkedList::getCurrentNodeData(int& fillWithData) {
 
-	if (Position != nullptr) {
-		fillWithData = Position->data;
+	if (_Position != nullptr) {
+		fillWithData = _Position->data;
 		return true;
 	}
 
@@ -182,24 +182,24 @@ bool LinkedList::getCurrentNodeData(int& fillWithData) {
 }
 
 //------------------------------------------------------------------------------
-// sets Position pointer to node containing passed data value (private)
+// sets _Position pointer to node containing passed data value (private)
 //------------------------------------------------------------------------------
 void LinkedList::_setPosition(int matchData) {
 
 	gotoHead();
 
 	bool found = false;
-	while (Position != nullptr && !found) {
+	while (_Position != nullptr && !found) {
 
-		if (Position->data == matchData) {
+		if (_Position->data == matchData) {
 			found = true;
 			break;
 		}
 
 		// keep previous position for easy deleteNode
-		_prevPosition = Position;
+		_prevPosition = _Position;
 
-		// advance Position to next node on the list
+		// advance _Position to next node on the list
 		gotoNext();
 	}
 }
@@ -209,7 +209,7 @@ void LinkedList::_setPosition(int matchData) {
 //------------------------------------------------------------------------------
 bool LinkedList::isEmpty() {
 
-	return (head == nullptr) ? true : false;
+	return (_head == nullptr) ? true : false;
 }
 
 //------------------------------------------------------------------------------
@@ -222,19 +222,19 @@ void LinkedList::makeEmpty() {
 
 	gotoHead();
 
-	while (Position != nullptr) {
-		// save each Position value
-		Node* pNode = Position;
+	while (_Position != nullptr) {
+		// save each _Position value
+		Node* pNode = _Position;
 
-		// then gotoNext() advances Position to next node on the list
+		// then gotoNext() advances _Position to next node on the list
 		gotoNext();
 
-		// now our Position is the next node, we can
-		// delete previous Position's memory
+		// now our _Position is the next node, we can
+		// delete previous _Position's memory
 		// the memory deleted is every Node instance
 		delete pNode;
 	}
 
-	head = nullptr;
-	Position = nullptr;
+	_head = nullptr;
+	_Position = nullptr;
 }
