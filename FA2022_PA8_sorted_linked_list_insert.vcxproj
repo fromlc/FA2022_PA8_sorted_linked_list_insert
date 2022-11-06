@@ -127,8 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="source\app.cpp" />
     <ClCompile Include="source\LinkedList.cpp" />
+    <ClCompile Include="source\PA8_driver_app.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\LinkedList.h" />

@@ -18,7 +18,7 @@
     <ClCompile Include="source\LinkedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\app.cpp">
+    <ClCompile Include="source\PA8_driver_app.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
