@@ -213,7 +213,9 @@ bool LinkedList::isEmpty() {
 }
 
 //------------------------------------------------------------------------------
-// 
+// traverse list to release all Nodes
+//		- shallow memory release only - ok for original int data in Node
+//		- #TODO MEMORY LEAK if LinkedList carries pointer data in Node
 //------------------------------------------------------------------------------
 void LinkedList::makeEmpty() {
 
@@ -237,4 +239,25 @@ void LinkedList::makeEmpty() {
 
 	_head = nullptr;
 	_Position = nullptr;
+}
+
+//------------------------------------------------------------------------------
+// return data value at node# index 
+//------------------------------------------------------------------------------
+bool LinkedList::at(int index, int& data) {
+
+	if (!_head)	return false;
+
+	Node* p = _head;
+	int i = 0;
+
+	while (p && i < index) {
+		p = p->next;
+		++i;
+	}
+
+	if (!p) return false;
+
+	data = p->data;
+	return true;
 }

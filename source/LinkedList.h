@@ -55,6 +55,9 @@ private:
 public:
 	// manage list 
 	bool isEmpty();
-	void makeEmpty();	// release each Node's memory
+	// release each Node's memory
+	void makeEmpty();
+	// return data value at node# index
+	bool at(int index, int& data);	// return data value at node# index
 };
 #endif

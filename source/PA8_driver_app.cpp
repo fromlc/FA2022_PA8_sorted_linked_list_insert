@@ -41,20 +41,30 @@ int main() {
 	//--------------------------------------------------------------------------
 	// add some list items, on add each one becomes the new list head
 	//--------------------------------------------------------------------------
-	//testAdd(myList);
+//	testInsert(myList);
+	testAdd(myList);
+
+	//--------------------------------------------------------------------------
+	// these function calls are the test suite for the new at() method
+	//--------------------------------------------------------------------------
+	int data; // ref param holds at() result
+	bool at_OK_0 = myList.at(0, data);
+	bool at_OK_1 = myList.at(1, data);
+	bool at_OK_2 = myList.at(2, data);
+	bool at_OK_100 = myList.at(100, data);
 
 	//--------------------------------------------------------------------------
 	// insert some list items in ascending sort order
 	//--------------------------------------------------------------------------
-	testInsert(myList);
+//	testInsert(myList);
 
 	//--------------------------------------------------------------------------
 	// delete list items
 	//--------------------------------------------------------------------------
-	testDelete(myList);
+//	testDelete(myList);
 
 	// END TEST release all node memory
-	myList.makeEmpty();
+//	myList.makeEmpty();
 
 	// good c++itizen
 	return 0;
@@ -67,6 +77,7 @@ int main() {
 //------------------------------------------------------------------------------
 void testAdd(LinkedList& myList) {
 
+	_newNshow(myList, 0, ADD);
 	_newNshow(myList, 1, ADD);
 	_newNshow(myList, 2, ADD);
 	_newNshow(myList, 3, ADD);
